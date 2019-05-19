@@ -39,7 +39,4 @@ class LottoGame {
         return amount / PURCHASE_UNIT;
     }
 
-    static boolean isValidLottoNumber(int num) {
-        return MINIMUM_LOTTO_NUM <= num && num <= MAXIMUM_LOTTO_NUM;
-    }
 }

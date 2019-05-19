@@ -1,14 +1,13 @@
 import org.junit.jupiter.api.Test;
+import util.LottoValidation;
 
 import java.util.Scanner;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static util.Constant.MAXIMUM_LOTTO_NUM;
-import static util.Constant.MINIMUM_LOTTO_NUM;
 
-public class LottoGameTest {
+class LottoGameTest {
 
     @Test
     void getLottoCountWithExactInput() {
@@ -36,39 +35,14 @@ public class LottoGameTest {
     }
 
     @Test
-    void isValidLottoNumberWithMinValidNumber() {
-        assertThat(LottoGame.isValidLottoNumber(MINIMUM_LOTTO_NUM)).isEqualTo(true);
-    }
-
-    @Test
-    void isValidLottoNumberWitValidNumber() {
-        assertThat(LottoGame.isValidLottoNumber(5)).isEqualTo(true);
-    }
-
-    @Test
-    void isValidLottoNumberWithMaxValidNumber() {
-        assertThat(LottoGame.isValidLottoNumber(MAXIMUM_LOTTO_NUM)).isEqualTo(true);
-    }
-
-    @Test
-    void isValidLottoNumberWithInvalidSmallNumber() {
-        assertThat(LottoGame.isValidLottoNumber(MINIMUM_LOTTO_NUM-1)).isEqualTo(false);
-    }
-
-    @Test
-    void isValidLottoNumberWithInvalidLargeNumber() {
-        assertThat(LottoGame.isValidLottoNumber(MAXIMUM_LOTTO_NUM+1)).isEqualTo(false);
-    }
-
-    @Test
     void generateLottoNumber() {
-        assertThat(LottoGame.isValidLottoNumber(Lotto.generateLottoNumber())).isEqualTo(true);
+        assertThat(LottoValidation.isValidLottoNumber(Lotto.generateLottoNumber())).isEqualTo(true);
     }
 
     @Test
     void generateLottoNumbers() {
         Set<Integer> numbers = new Lotto().nums;
-        assertThat(numbers.stream().allMatch(LottoGame::isValidLottoNumber)).isEqualTo(true);
+        assertThat(numbers.stream().allMatch(LottoValidation::isValidLottoNumber)).isEqualTo(true);
         assertThat(numbers.size()).isEqualTo(6);
     }
 
