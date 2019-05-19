@@ -1,10 +1,7 @@
 import util.LottoStringUtil;
 import util.LottoValidation;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 import static util.Constant.*;
 
@@ -13,15 +10,22 @@ class LottoGame {
     Set<Lotto> lottos;
     private List<Integer> winningNumbers;
     int bonusNumber;
+    private int count;
 
     LottoGame(Scanner scanner) {
         this.scanner = scanner;
         lottos = new HashSet<>();
         String amount = getUserInput(PURCHASE_AMOUNT_MSG);
-        int count = getLottoCount(amount);
+        count = getLottoCount(amount);
         generateLottos(count);
+        printLottoNumbers();
         winningNumbers = getWinningNumbers();
         bonusNumber = getBonusNumber();
+    }
+
+    private void printLottoNumbers() {
+        System.out.println(String.format(PURCHASE_COUNT_FORMAT, count));
+        Arrays.stream(lottos.toArray()).forEach(System.out::println);
     }
 
     private void generateLottos(int count) {
