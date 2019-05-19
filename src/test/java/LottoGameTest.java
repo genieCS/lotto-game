@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Test;
 
+import java.util.Scanner;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -69,5 +70,12 @@ public class LottoGameTest {
         Set<Integer> numbers = new Lotto().getNumbers();
         assertThat(numbers.stream().allMatch(LottoGame::isValidLottoNumber)).isEqualTo(true);
         assertThat(numbers.size()).isEqualTo(6);
+    }
+
+    @Test
+    void testScanner() {
+        Scanner scanner = new Scanner("8000");
+        LottoGame game = new LottoGame(scanner);
+        assertThat(game.count).isEqualTo(8);
     }
 }

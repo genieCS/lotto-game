@@ -4,15 +4,17 @@ import java.util.Scanner;
 
 import static util.Constant.*;
 
-public class LottoGame {
-    private static final Scanner scanner = new Scanner(System.in);
+class LottoGame {
+    private Scanner scanner;
+    int count;
 
-    public static void main(String[] args) {
+    LottoGame(Scanner scanner) {
+        this.scanner = scanner;
         String input = getUserInput(PURCHASE_AMOUNT_MSG);
-        int count = getLottoCount(input);
+        count = getLottoCount(input);
     }
 
-    private static String getUserInput(String message) {
+    private String getUserInput(String message) {
         System.out.println(message);
         return scanner.nextLine();
     }
