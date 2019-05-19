@@ -1,6 +1,8 @@
 import org.apache.commons.lang3.StringUtils;
+import util.LottoStringUtil;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -9,14 +11,15 @@ import static util.Constant.*;
 class LottoGame {
     private Scanner scanner;
     Set<Lotto> lottos;
+    private List<Integer> winningNumbers;
 
     LottoGame(Scanner scanner) {
         this.scanner = scanner;
         lottos = new HashSet<>();
-        String input = getUserInput(PURCHASE_AMOUNT_MSG);
-        int count = getLottoCount(input);
+        String amount = getUserInput(PURCHASE_AMOUNT_MSG);
+        int count = getLottoCount(amount);
         generateLottos(count);
-
+        winningNumbers = getWinningNumbers();
     }
 
     private void generateLottos(int count) {
@@ -39,4 +42,7 @@ class LottoGame {
         return amount / PURCHASE_UNIT;
     }
 
+    private List<Integer> getWinningNumbers() {
+        return LottoStringUtil.splitToLotteryNumbers(getUserInput(WINNING_LOTTERY_MSG));
+    }
 }

@@ -43,12 +43,12 @@ class LottoGameTest {
     void generateLottoNumbers() {
         Set<Integer> numbers = new Lotto().nums;
         assertThat(numbers.stream().allMatch(LottoValidation::isValidLottoNumber)).isEqualTo(true);
-        assertThat(numbers.size()).isEqualTo(6);
+        assertThat(LottoValidation.isValidLottoSize(numbers)).isEqualTo(true);
     }
 
     @Test
     void generateLottos() {
-        Scanner scanner = new Scanner("8000");
+        Scanner scanner = new Scanner("8000\n1,2,3,4,5,6");
         LottoGame game = new LottoGame(scanner);
         assertThat(game.lottos.size()).isEqualTo(8);
     }
