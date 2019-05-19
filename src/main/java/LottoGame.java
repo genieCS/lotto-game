@@ -11,6 +11,7 @@ class LottoGame {
     private List<Integer> winningNumbers;
     int bonusNumber;
     private int count;
+    private Lotto winningLotto;
 
     LottoGame(Scanner scanner) {
         this.scanner = scanner;
@@ -21,6 +22,7 @@ class LottoGame {
         printLottoNumbers();
         winningNumbers = getWinningNumbers();
         bonusNumber = getBonusNumber();
+        winningLotto = new Lotto(winningNumbers, bonusNumber);
     }
 
     private void printLottoNumbers() {
