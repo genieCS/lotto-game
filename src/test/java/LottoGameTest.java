@@ -10,28 +10,28 @@ import static util.Constant.MINIMUM_LOTTO_NUM;
 public class LottoGameTest {
 
     @Test
-    void getPurchaseAmountWithExactInput() {
-        assertThat(LottoGame.getPurchaseAmount("8000")).isEqualTo(8000);
+    void getLottoCountWithExactInput() {
+        assertThat(LottoGame.getLottoCount("8000")).isEqualTo(8);
     }
 
     @Test
-    void getPurchaseAmountWithRichInput() {
-        assertThat(LottoGame.getPurchaseAmount("8500")).isEqualTo(8000);
+    void getLottoCountWithRichInput() {
+        assertThat(LottoGame.getLottoCount("8500")).isEqualTo(8);
     }
 
     @Test
-    void getPurchaseAmountWithNullInput() {
-        assertThrows(IllegalArgumentException.class, () -> LottoGame.getPurchaseAmount(null));
+    void getLottoCountWithNullInput() {
+        assertThrows(IllegalArgumentException.class, () -> LottoGame.getLottoCount(null));
     }
 
     @Test
-    void getPurchaseAmountWithEmptyInput() {
-        assertThrows(IllegalArgumentException.class, () -> LottoGame.getPurchaseAmount(""));
+    void getLottoCountWithEmptyInput() {
+        assertThrows(IllegalArgumentException.class, () -> LottoGame.getLottoCount(""));
     }
 
     @Test
-    void getPurchaseAmountWithInvalidInput() {
-        assertThrows(IllegalArgumentException.class, () -> LottoGame.getPurchaseAmount("384abc"));
+    void getLottoCountWithInvalidInput() {
+        assertThrows(IllegalArgumentException.class, () -> LottoGame.getLottoCount("384abc"));
     }
 
     @Test

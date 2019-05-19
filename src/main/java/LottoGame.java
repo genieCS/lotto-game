@@ -9,7 +9,7 @@ public class LottoGame {
 
     public static void main(String[] args) {
         String input = getUserInput(PURCHASE_AMOUNT_MSG);
-        int amount = getPurchaseAmount(input);
+        int count = getLottoCount(input);
     }
 
     private static String getUserInput(String message) {
@@ -17,12 +17,12 @@ public class LottoGame {
         return scanner.nextLine();
     }
 
-    static int getPurchaseAmount(String input) {
+    static int getLottoCount(String input) {
         if(!StringUtils.isNumeric(input)) {
             throw new IllegalArgumentException();
         }
         int amount = Integer.parseInt(input);
-        return (amount / PURCHASE_UNIT ) * PURCHASE_UNIT;
+        return amount / PURCHASE_UNIT;
     }
 
     static boolean isValidLottoNumber(int num) {
