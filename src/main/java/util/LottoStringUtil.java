@@ -23,4 +23,11 @@ public class LottoStringUtil {
     private static List<Integer> toNumbers(String[] values) {
         return Arrays.stream(values).map(Integer::parseInt).collect(toList());
     }
+
+    public static int toNumber(String num) {
+        if(!StringUtils.isNumeric(num)) {
+            throw new IllegalArgumentException();
+        }
+        return Integer.parseInt(num);
+    }
 }

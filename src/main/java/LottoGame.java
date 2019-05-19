@@ -1,5 +1,5 @@
-import org.apache.commons.lang3.StringUtils;
 import util.LottoStringUtil;
+import util.LottoValidation;
 
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +12,7 @@ class LottoGame {
     private Scanner scanner;
     Set<Lotto> lottos;
     private List<Integer> winningNumbers;
+    int bonusNumber;
 
     LottoGame(Scanner scanner) {
         this.scanner = scanner;
@@ -20,6 +21,7 @@ class LottoGame {
         int count = getLottoCount(amount);
         generateLottos(count);
         winningNumbers = getWinningNumbers();
+        bonusNumber = getBonusNumber();
     }
 
     private void generateLottos(int count) {
@@ -35,14 +37,23 @@ class LottoGame {
     }
 
     static int getLottoCount(String input) {
-        if(!StringUtils.isNumeric(input)) {
-            throw new IllegalArgumentException();
-        }
-        int amount = Integer.parseInt(input);
+        int amount = LottoStringUtil.toNumber(input);
         return amount / PURCHASE_UNIT;
     }
 
     private List<Integer> getWinningNumbers() {
         return LottoStringUtil.splitToLotteryNumbers(getUserInput(WINNING_LOTTERY_MSG));
+    }
+
+    private int getBonusNumber() {
+        int bonus = LottoStringUtil.toNumber(getUserInput(BONUS_BALL_MSG));
+        if (!isValidBonusNumber(bonus)) {
+            throw new IllegalArgumentException();
+        }
+        return bonus;
+    }
+
+    private boolean isValidBonusNumber(int bonus) {
+        return winningNumbers.indexOf(bonus) == -1 && LottoValidation.isValidLottoNumber(bonus);
     }
 }
