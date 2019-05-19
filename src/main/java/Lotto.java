@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static util.Constant.LOTTO_SIZE;
@@ -11,6 +12,16 @@ public class Lotto {
     public Lotto() {
         nums = new HashSet<>();
         addUniqueLottoNumbers();
+    }
+
+    Lotto(List<Integer> nums) {
+        this.nums = new HashSet<>(nums);
+    }
+
+    int intersectionSize(Lotto other) {
+        Set<Integer> intersection = new HashSet<>(nums);
+        intersection.retainAll(other.nums);
+        return intersection.size();
     }
 
     private void addUniqueLottoNumbers() {
