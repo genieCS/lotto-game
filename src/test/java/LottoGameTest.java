@@ -67,7 +67,7 @@ public class LottoGameTest {
 
     @Test
     void generateLottoNumbers() {
-        Set<Integer> numbers = new Lotto().getNumbers();
+        Set<Integer> numbers = new Lotto().nums;
         assertThat(numbers.stream().allMatch(LottoGame::isValidLottoNumber)).isEqualTo(true);
         assertThat(numbers.size()).isEqualTo(6);
     }

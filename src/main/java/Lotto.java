@@ -5,7 +5,7 @@ import static util.Constant.LOTTO_SIZE;
 import static util.Constant.MAXIMUM_LOTTO_NUM;
 
 public class Lotto {
-    private Set<Integer> nums;
+    Set<Integer> nums;
 
     public Lotto() {
         nums = new HashSet<>();
@@ -28,9 +28,5 @@ public class Lotto {
 
     static int generateLottoNumber() {
         return (int) (Math.random() * MAXIMUM_LOTTO_NUM) + 1;
-    }
-
-    Set<Integer> getNumbers() {
-        return nums;
     }
 }
