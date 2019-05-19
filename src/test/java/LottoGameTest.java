@@ -73,9 +73,9 @@ public class LottoGameTest {
     }
 
     @Test
-    void testScanner() {
+    void generateLottos() {
         Scanner scanner = new Scanner("8000");
         LottoGame game = new LottoGame(scanner);
-        assertThat(game.count).isEqualTo(8);
+        assertThat(game.lottos.size()).isEqualTo(8);
     }
 }

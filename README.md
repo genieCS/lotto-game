@@ -4,6 +4,7 @@ This work is done during kakaopay internship program, as an assignment for javaj
 ## feature
 * get user input for purchase amount
 * generate 6 unique random integers between 1 and 45. 
+* create lottos by purchase amount
 * get user input for lotto numbers, that is 6 unique integers between 1 and 45.
 * get user input for a bonus number, that is different from lotto numbers and between 1 and 45.
 * compare two sets of 6 integers and return how many common integers are.
