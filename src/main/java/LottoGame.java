@@ -11,8 +11,8 @@ class LottoGame {
     Set<Lotto> lottos;
     private int count;
     private Lotto winningLotto;
-    final HashMap<Integer, Integer> winningMoney = initWinningMoney();
-    final HashMap<Integer, Integer> winningCount = initWinningCount();
+    private final HashMap<Integer, Integer> winningMoney = initWinningMoney();
+    private final HashMap<Integer, Integer> winningCount = initWinningCount();
 
     LottoGame(Scanner scanner) {
         this.scanner = scanner;
