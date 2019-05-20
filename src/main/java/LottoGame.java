@@ -77,21 +77,6 @@ class LottoGame {
         intersectionCount.put(idx, prev + 1);
     }
 
-    private void printLotteryResult(HashMap<Integer, Integer> intersectionCount, float earningRate) {
-        System.out.println(WINNING_RESULT);
-        printIntersectionCounts(intersectionCount);
-        printEarningRate(earningRate);
-    }
-
-    private void printIntersectionCounts(HashMap<Integer, Integer> intersectionCount) {
-        HashMap<Integer, Integer> winningMoney = getWinningMoneyMap();
-        for (int i=3; i < LOTTO_SIZE; i++) {
-            System.out.println(String.format(INTERSECTION_COUNT_FORMAT, i, winningMoney.get(i), intersectionCount.get(i)));
-        }
-        System.out.println(String.format(BONUS_COUNT_FORMAT, winningMoney.get(FIVE_WITH_BONUS), intersectionCount.get(FIVE_WITH_BONUS)));
-        System.out.println(String.format(INTERSECTION_COUNT_FORMAT, 6, winningMoney.get(6), intersectionCount.get(6)));
-    }
-
     private float getEarningRate(HashMap<Integer, Integer> intersectionCount) {
         int earningMoney = getEarningMoney(intersectionCount);
         int count = lottos.size();
@@ -108,6 +93,21 @@ class LottoGame {
             sum += winningMoney.getOrDefault(idx, 0) * value;
         }
         return sum;
+    }
+
+    private void printLotteryResult(HashMap<Integer, Integer> intersectionCount, float earningRate) {
+        System.out.println(WINNING_RESULT);
+        printIntersectionCounts(intersectionCount);
+        printEarningRate(earningRate);
+    }
+
+    private void printIntersectionCounts(HashMap<Integer, Integer> intersectionCount) {
+        HashMap<Integer, Integer> winningMoney = getWinningMoneyMap();
+        for (int i=3; i < LOTTO_SIZE; i++) {
+            System.out.println(String.format(INTERSECTION_COUNT_FORMAT, i, winningMoney.get(i), intersectionCount.get(i)));
+        }
+        System.out.println(String.format(BONUS_COUNT_FORMAT, winningMoney.get(FIVE_WITH_BONUS), intersectionCount.get(FIVE_WITH_BONUS)));
+        System.out.println(String.format(INTERSECTION_COUNT_FORMAT, 6, winningMoney.get(6), intersectionCount.get(6)));
     }
 
     private void printEarningRate(float earningRate) {
