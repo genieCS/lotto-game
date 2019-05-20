@@ -16,6 +16,7 @@ class LottoGame {
     private Lotto winningLotto;
     final HashMap<Integer, Integer> winningMoney = initWinningMoney();
     final HashMap<Integer, Integer> winningCount = initWinningCount();
+    int amount = 0;
 
     LottoGame(Scanner scanner) {
         this.scanner = scanner;
@@ -23,7 +24,7 @@ class LottoGame {
         issueLottos();
         setWinningLotto();
         computeWinningCount();
-        int earningMoney = getEarningMoney(winningCount);
+        printLotteryResult();
     }
 
     private void issueLottos() {
@@ -47,6 +48,12 @@ class LottoGame {
             sum += winningMoney.getOrDefault(idx, 0) * value;
         }
         return sum;
+    }
+
+    private float getEarningRate() {
+        int earningMoney = getEarningMoney(winningCount);
+        float amount = count * PURCHASE_UNIT;
+        return earningMoney / amount;
     }
 
     private void printLottoNumbers() {
@@ -94,5 +101,20 @@ class LottoGame {
 
     private boolean isValidBonusNumber(int bonus) {
         return winningNumbers.indexOf(bonus) == -1 && LottoValidation.isValidLottoNumber(bonus);
+    }
+
+    private void printLotteryResult() {
+        System.out.println(WINNING_RESULT);
+        printIntersectionCounts();
+        float earningRate = getEarningRate();
+        System.out.println(String.format(EARNING_RATE_FORMAT, earningRate));
+    }
+
+    private void printIntersectionCounts() {
+        for (int i=3; i < LOTTO_SIZE; i++) {
+            System.out.println(String.format(INTERSECTION_COUNT_FORMAT, i, winningMoney.get(i), winningCount.get(i)));
+        }
+        System.out.println(String.format(BONUS_COUNT_FORMAT, winningMoney.get(FIVE_WITH_BONUS), winningCount.get(FIVE_WITH_BONUS)));
+        System.out.println(String.format(INTERSECTION_COUNT_FORMAT, 6, winningMoney.get(6), winningCount.get(6)));
     }
 }

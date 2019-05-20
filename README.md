@@ -11,7 +11,7 @@ This work is done during kakaopay internship program, as an assignment for javaj
 * compare two sets of 6 integers and return how many common integers are.
 * calculate winning money of one lottery.
 * calculate rate of return.
-
+* print lottery result.
 
 ## rule
 * maximum indent depth is 1.
