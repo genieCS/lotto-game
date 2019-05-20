@@ -10,4 +10,5 @@ public class Constant {
     public static final String BONUS_BALL_MSG = "보너스 볼을 입력해주세요.";
     public static final String PURCHASE_COUNT_FORMAT = "%d개를 구매했습니다.";
     public static final int FIVE_WITH_BONUS = 7;
+    static final int mapSize = LOTTO_SIZE + 2;
 }

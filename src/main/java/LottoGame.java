@@ -4,6 +4,8 @@ import util.LottoValidation;
 import java.util.*;
 
 import static util.Constant.*;
+import static util.LottoMap.initWinningCount;
+import static util.LottoMap.initWinningMoney;
 
 class LottoGame {
     private Scanner scanner;
@@ -12,17 +14,39 @@ class LottoGame {
     int bonusNumber;
     private int count;
     private Lotto winningLotto;
+    final HashMap<Integer, Integer> winningMoney = initWinningMoney();
+    final HashMap<Integer, Integer> winningCount = initWinningCount();
 
     LottoGame(Scanner scanner) {
         this.scanner = scanner;
         lottos = new HashSet<>();
+        issueLottos();
+        setWinningLotto();
+        computeWinningCount();
+        int earningMoney = getEarningMoney(winningCount);
+    }
+
+    private void issueLottos() {
         String amount = getUserInput(PURCHASE_AMOUNT_MSG);
         count = getLottoCount(amount);
         generateLottos(count);
         printLottoNumbers();
+    }
+
+    private void setWinningLotto() {
         winningNumbers = getWinningNumbers();
         bonusNumber = getBonusNumber();
         winningLotto = new Lotto(winningNumbers, bonusNumber);
+    }
+
+    int getEarningMoney(HashMap<Integer, Integer> winningCount) {
+        int sum = 0;
+        for (Map.Entry<Integer, Integer> entry : winningCount.entrySet()) {
+            Integer idx = entry.getKey();
+            Integer value = entry.getValue();
+            sum += winningMoney.getOrDefault(idx, 0) * value;
+        }
+        return sum;
     }
 
     private void printLottoNumbers() {
@@ -35,6 +59,15 @@ class LottoGame {
             Lotto lotto = new Lotto();
             lottos.add(lotto);
         }
+    }
+
+    private void increaseWinningCount(int idx) {
+        int prev = winningCount.getOrDefault(idx, 0);
+        winningCount.put(idx, prev + 1);
+    }
+
+    private void computeWinningCount() {
+        new ArrayList<>(lottos).stream().mapToInt(winningLotto::winningIndex).forEach(this::increaseWinningCount);
     }
 
     private String getUserInput(String message) {

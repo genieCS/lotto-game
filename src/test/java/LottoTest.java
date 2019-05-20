@@ -33,49 +33,49 @@ class LottoTest {
     void winningMoneyWithZero() {
         Lotto lotto1 = new Lotto(Arrays.asList(1,2,3,4,5,6));
         Lotto lotto2 = new Lotto(Arrays.asList(7,8,9,10,11,12));
-        assertThat(lotto1.winningMoney(lotto2)).isEqualTo(0);
+        assertThat(lotto1.winningIndex(lotto2)).isEqualTo(0);
     }
 
     @Test
     void winningMoneyWithOne() {
         Lotto lotto1 = new Lotto(Arrays.asList(1,2,3,4,5,6));
         Lotto lotto2 = new Lotto(Arrays.asList(1,7,8,9,10,11));
-        assertThat(lotto1.winningMoney(lotto2)).isEqualTo(0);
+        assertThat(lotto1.winningIndex(lotto2)).isEqualTo(1);
     }
 
     @Test
     void winningMoneyWithTwo() {
         Lotto lotto1 = new Lotto(Arrays.asList(1,2,3,4,5,6));
         Lotto lotto2 = new Lotto(Arrays.asList(1,2,7,8,9,10));
-        assertThat(lotto1.winningMoney(lotto2)).isEqualTo(0);
+        assertThat(lotto1.winningIndex(lotto2)).isEqualTo(2);
     }
 
     @Test
     void winningMoneyWithThree() {
         Lotto lotto1 = new Lotto(Arrays.asList(1,2,3,4,5,6));
         Lotto lotto2 = new Lotto(Arrays.asList(1,2,3,7,8,9));
-        assertThat(lotto1.winningMoney(lotto2)).isEqualTo(lotto1.moneys.get(3));
+        assertThat(lotto1.winningIndex(lotto2)).isEqualTo(3);
     }
 
     @Test
     void winningMoneyWithFour() {
         Lotto lotto1 = new Lotto(Arrays.asList(1,2,3,4,5,6));
         Lotto lotto2 = new Lotto(Arrays.asList(1,2,3,4,7,8));
-        assertThat(lotto1.winningMoney(lotto2)).isEqualTo(lotto1.moneys.get(4));
+        assertThat(lotto1.winningIndex(lotto2)).isEqualTo(4);
     }
 
     @Test
     void winningMoneyWithFive() {
         Lotto lotto1 = new Lotto(Arrays.asList(1,2,3,4,5,6));
         Lotto lotto2 = new Lotto(Arrays.asList(1,2,3,4,5,7));
-        assertThat(lotto1.winningMoney(lotto2)).isEqualTo(lotto1.moneys.get(5));
+        assertThat(lotto1.winningIndex(lotto2)).isEqualTo(5);
     }
 
     @Test
     void winningMoneyWithFiveAndBonus() {
         Lotto lotto1 = new Lotto(Arrays.asList(1,2,3,4,5,6), 7);
         Lotto lotto2 = new Lotto(Arrays.asList(1,2,3,4,5,7));
-        assertThat(lotto1.winningMoney(lotto2)).isEqualTo(lotto1.moneys.get(FIVE_WITH_BONUS));
+        assertThat(lotto1.winningIndex(lotto2)).isEqualTo(FIVE_WITH_BONUS);
     }
 
     @Test
@@ -83,6 +83,6 @@ class LottoTest {
         List<Integer> numbers = Arrays.asList(1,2,3,4,5,6);
         Lotto lotto1 = new Lotto(numbers);
         Lotto lotto2 = new Lotto(numbers);
-        assertThat(lotto1.winningMoney(lotto2)).isEqualTo(lotto1.moneys.get(6));
+        assertThat(lotto1.winningIndex(lotto2)).isEqualTo(6);
     }
 }

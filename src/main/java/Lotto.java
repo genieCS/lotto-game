@@ -5,7 +5,6 @@ import static util.Constant.*;
 public class Lotto {
     Set<Integer> nums;
     private int bonus;
-    final Map<Integer, Integer> moneys = new HashMap<>();
 
     Lotto() {
         nums = new HashSet<>();
@@ -20,19 +19,14 @@ public class Lotto {
     Lotto(List<Integer> nums, int bonus) {
         this.nums = new HashSet<>(nums);
         this.bonus = bonus;
-        moneys.put(3, 5000);
-        moneys.put(4, 50000);
-        moneys.put(5, 150000);
-        moneys.put(6, 2000000000);
-        moneys.put(FIVE_WITH_BONUS, 30000000);
     }
 
-    int winningMoney(Lotto other) {
+    int winningIndex(Lotto other) {
         int size = intersectionSize(other);
         if (isGeneralCase(other, size)) {
-            return moneys.getOrDefault(size, 0);
+            return  size;
         }
-        return moneys.get(FIVE_WITH_BONUS);
+        return FIVE_WITH_BONUS;
     }
 
     private boolean isGeneralCase(Lotto other, int size) {
