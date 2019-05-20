@@ -20,7 +20,7 @@ public class LottoStringUtil {
         return values;
     }
 
-    private static List<Integer> toNumbers(String[] values) {
+    static List<Integer> toNumbers(String[] values) {
         return Arrays.stream(values).map(Integer::parseInt).collect(toList());
     }
 

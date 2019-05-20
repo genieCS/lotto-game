@@ -3,6 +3,7 @@ import util.LottoValidation;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -55,15 +56,13 @@ class LottoValidationTest {
 
     @Test
     void isValidLottoSize() {
-        String input = "1,2,3,4,5,6";
-        String[] values = input.split(",");
+        List<Integer> values = Arrays.asList(1,2,3,4,5,6);
         assertThat(LottoValidation.isValidLottoSize(values)).isEqualTo(true);
     }
 
     @Test
     void isValidLottoSizeWithInvalidInput() {
-        String input = "1,2,3,4,5,6,7,8";
-        String[] values = input.split(",");
+        List<Integer> values = Arrays.asList(1,2,3,4,5,6,7,8);
         assertThat(LottoValidation.isValidLottoSize(values)).isEqualTo(false);
     }
 
@@ -76,8 +75,7 @@ class LottoValidationTest {
 
     @Test
     void areAllUniqueWithValid() {
-        String input = "1,2,3,4,5,6";
-        String[] values = input.split(",");
+        List<Integer> values = Arrays.asList(1,2,3,4,5,6);
         assertThat(LottoValidation.areAllUnique(values)).isEqualTo(true);
     }
 }
