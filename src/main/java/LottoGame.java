@@ -3,40 +3,104 @@ import util.LottoStringUtil;
 import java.util.*;
 
 import static util.Constant.*;
-import static util.LottoMap.initWinningCount;
-import static util.LottoMap.initWinningMoney;
+import static util.LottoMap.initIntersectionCount;
+import static util.LottoMap.getWinningMoneyMap;
 
 class LottoGame {
     private Scanner scanner;
     Set<Lotto> lottos;
-    private int count;
     private Lotto winningLotto;
-    private final HashMap<Integer, Integer> winningMoney = initWinningMoney();
-    private final HashMap<Integer, Integer> winningCount = initWinningCount();
 
     LottoGame(Scanner scanner) {
         this.scanner = scanner;
         lottos = new HashSet<>();
-        issueLottos();
-        setWinningLotto();
-        computeWinningCount();
-        printLotteryResult();
+        startGame();
     }
 
-    private void issueLottos() {
-        String amount = getUserInput(PURCHASE_AMOUNT_MSG);
-        count = getLottoCount(amount);
-        generateLottos(count);
-        printLottoNumbers();
+    private void startGame() {
+        String amount = getPurchaseAmountInput();
+        int count = getLottoCount(amount);
+        issueLottos(count);
+        printLottoCountAndLottoNumbers();
+        List<Integer> winningNumbers = getWinningNumbersInput();
+        int bonusNumber = getBonusNumberInput();
+        setWinningLotto(winningNumbers, bonusNumber);
+        HashMap<Integer, Integer> intersectionCount = computeIntersectionCount();
+        printLotteryResult(intersectionCount);
     }
 
-    private void setWinningLotto() {
-        List<Integer> winningNumbers = getWinningNumbers();
-        int bonusNumber = getBonusNumber();
+
+    private String getPurchaseAmountInput() {
+        return getUserInput(PURCHASE_AMOUNT_MSG);
+    }
+
+    private int getLottoCount(String input) {
+        int amount = LottoStringUtil.toNumber(input);
+        return amount / PURCHASE_UNIT;
+    }
+
+    private void issueLottos(int count) {
+        for(int i = 0; i< count; i++) {
+            Lotto lotto = new Lotto();
+            lottos.add(lotto);
+        }
+    }
+
+    private void printLottoCountAndLottoNumbers() {
+        System.out.println(String.format(PURCHASE_COUNT_FORMAT, lottos.size()));
+        Arrays.stream(lottos.toArray()).forEach(System.out::println);
+    }
+
+    private List<Integer> getWinningNumbersInput() {
+        return LottoStringUtil.splitToLotteryNumbers(getUserInput(WINNING_LOTTERY_MSG));
+    }
+
+    private int getBonusNumberInput() {
+        return LottoStringUtil.toNumber(getUserInput(BONUS_BALL_MSG));
+    }
+
+    private void setWinningLotto(List<Integer> winningNumbers, int bonusNumber) {
         winningLotto = new Lotto(winningNumbers, bonusNumber);
     }
 
+    private HashMap<Integer, Integer> computeIntersectionCount() {
+        HashMap<Integer, Integer> intersectionCount = initIntersectionCount();
+        new ArrayList<>(lottos).stream().mapToInt(winningLotto::winningIndex).forEach(idx -> {
+            increaseIntersectionCount(intersectionCount, idx);
+        });
+        return intersectionCount;
+    }
+
+    private void increaseIntersectionCount(HashMap<Integer, Integer> intersectionCount, int idx) {
+        int prev = intersectionCount.getOrDefault(idx, 0);
+        intersectionCount.put(idx, prev + 1);
+    }
+
+    private void printLotteryResult(HashMap<Integer, Integer> intersectionCount) {
+        System.out.println(WINNING_RESULT);
+        printIntersectionCounts(intersectionCount);
+        float earningRate = getEarningRate(intersectionCount);
+        System.out.println(String.format(EARNING_RATE_FORMAT, earningRate));
+    }
+
+    private void printIntersectionCounts(HashMap<Integer, Integer> intersectionCount) {
+        HashMap<Integer, Integer> winningMoney = getWinningMoneyMap();
+        for (int i=3; i < LOTTO_SIZE; i++) {
+            System.out.println(String.format(INTERSECTION_COUNT_FORMAT, i, winningMoney.get(i), intersectionCount.get(i)));
+        }
+        System.out.println(String.format(BONUS_COUNT_FORMAT, winningMoney.get(FIVE_WITH_BONUS), intersectionCount.get(FIVE_WITH_BONUS)));
+        System.out.println(String.format(INTERSECTION_COUNT_FORMAT, 6, winningMoney.get(6), intersectionCount.get(6)));
+    }
+
+    private float getEarningRate(HashMap<Integer, Integer> intersectionCount) {
+        int earningMoney = getEarningMoney(intersectionCount);
+        int count = lottos.size();
+        float amount = count * PURCHASE_UNIT;
+        return earningMoney / amount;
+    }
+
     int getEarningMoney(HashMap<Integer, Integer> winningCount) {
+        HashMap<Integer, Integer> winningMoney = getWinningMoneyMap();
         int sum = 0;
         for (Map.Entry<Integer, Integer> entry : winningCount.entrySet()) {
             Integer idx = entry.getKey();
@@ -46,63 +110,8 @@ class LottoGame {
         return sum;
     }
 
-    private float getEarningRate() {
-        int earningMoney = getEarningMoney(winningCount);
-        float amount = count * PURCHASE_UNIT;
-        return earningMoney / amount;
-    }
-
-    private void printLottoNumbers() {
-        System.out.println(String.format(PURCHASE_COUNT_FORMAT, count));
-        Arrays.stream(lottos.toArray()).forEach(System.out::println);
-    }
-
-    private void generateLottos(int count) {
-        for(int i=0; i<count; i++) {
-            Lotto lotto = new Lotto();
-            lottos.add(lotto);
-        }
-    }
-
-    private void increaseWinningCount(int idx) {
-        int prev = winningCount.getOrDefault(idx, 0);
-        winningCount.put(idx, prev + 1);
-    }
-
-    private void computeWinningCount() {
-        new ArrayList<>(lottos).stream().mapToInt(winningLotto::winningIndex).forEach(this::increaseWinningCount);
-    }
-
     private String getUserInput(String message) {
         System.out.println(message);
         return scanner.nextLine();
-    }
-
-    static int getLottoCount(String input) {
-        int amount = LottoStringUtil.toNumber(input);
-        return amount / PURCHASE_UNIT;
-    }
-
-    private List<Integer> getWinningNumbers() {
-        return LottoStringUtil.splitToLotteryNumbers(getUserInput(WINNING_LOTTERY_MSG));
-    }
-
-    private int getBonusNumber() {
-        return LottoStringUtil.toNumber(getUserInput(BONUS_BALL_MSG));
-    }
-
-    private void printLotteryResult() {
-        System.out.println(WINNING_RESULT);
-        printIntersectionCounts();
-        float earningRate = getEarningRate();
-        System.out.println(String.format(EARNING_RATE_FORMAT, earningRate));
-    }
-
-    private void printIntersectionCounts() {
-        for (int i=3; i < LOTTO_SIZE; i++) {
-            System.out.println(String.format(INTERSECTION_COUNT_FORMAT, i, winningMoney.get(i), winningCount.get(i)));
-        }
-        System.out.println(String.format(BONUS_COUNT_FORMAT, winningMoney.get(FIVE_WITH_BONUS), winningCount.get(FIVE_WITH_BONUS)));
-        System.out.println(String.format(INTERSECTION_COUNT_FORMAT, 6, winningMoney.get(6), winningCount.get(6)));
     }
 }
