@@ -55,25 +55,6 @@ class LottoGameTest {
     }
 
     @Test
-    void getValidBonusNumber() {
-        Scanner scanner = new Scanner("8000\n1,2,3,4,5,6\n7");
-        LottoGame game = new LottoGame(scanner);
-        assertThat(game.bonusNumber).isEqualTo(7);
-    }
-
-    @Test
-    void getBonusNumberWithRedundantInput() {
-        Scanner scanner = new Scanner("8000\n1,2,3,4,5,6\n6");
-        assertThrows(IllegalArgumentException.class, () -> new LottoGame(scanner));
-    }
-
-    @Test
-    void getBonusNumberWithLargeInput() {
-        Scanner scanner = new Scanner("8000\n1,2,3,4,5,6\n400");
-        assertThrows(IllegalArgumentException.class, () -> new LottoGame(scanner));
-    }
-
-    @Test
     void getBonusNumberWithInvalidInput() {
         Scanner scanner = new Scanner("8000\n1,2,3,4,5,6\n;");
         assertThrows(IllegalArgumentException.class, () -> new LottoGame(scanner));

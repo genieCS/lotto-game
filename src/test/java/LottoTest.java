@@ -2,11 +2,29 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static util.Constant.FIVE_WITH_BONUS;
 
 class LottoTest {
+    @Test
+    void getValidBonusNumber() {
+        Lotto game = new Lotto(Arrays.asList(1,2,3,4,5,6), 7);
+        assertThat(game.bonus).isEqualTo(7);
+    }
+
+    @Test
+    void getBonusNumberWithRedundantInput() {
+        assertThrows(IllegalArgumentException.class, () -> new Lotto(Arrays.asList(1,2,3,4,5,6), 6));
+    }
+
+    @Test
+    void getBonusNumberWithLargeInput() {
+        assertThrows(IllegalArgumentException.class, () -> new Lotto(Arrays.asList(1,2,3,4,5,6), 400));
+    }
+
     @Test
     void intersectionSizeWithSame() {
         List<Integer> numbers = Arrays.asList(1,2,3,4,5,6);

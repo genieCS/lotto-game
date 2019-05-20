@@ -1,10 +1,12 @@
+import util.LottoValidation;
+
 import java.util.*;
 
 import static util.Constant.*;
 
 public class Lotto {
     Set<Integer> nums;
-    private int bonus;
+    int bonus;
 
     Lotto() {
         nums = new HashSet<>();
@@ -13,11 +15,14 @@ public class Lotto {
     }
 
     Lotto(List<Integer> nums) {
-        this(nums, 0);
+        this.nums = new HashSet<>(nums);
     }
 
     Lotto(List<Integer> nums, int bonus) {
         this.nums = new HashSet<>(nums);
+        if (!isValidBonusNumber(bonus)) {
+            throw new IllegalArgumentException();
+        }
         this.bonus = bonus;
     }
 
@@ -37,6 +42,11 @@ public class Lotto {
         Set<Integer> intersection = new HashSet<>(nums);
         intersection.retainAll(other.nums);
         return intersection.size();
+    }
+
+
+    private boolean isValidBonusNumber(int bonus) {
+        return !nums.contains(bonus) && LottoValidation.isValidLottoNumber(bonus);
     }
 
     private void addUniqueLottoNumbers() {

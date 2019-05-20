@@ -1,5 +1,4 @@
 import util.LottoStringUtil;
-import util.LottoValidation;
 
 import java.util.*;
 
@@ -11,7 +10,6 @@ class LottoGame {
     private Scanner scanner;
     Set<Lotto> lottos;
     private List<Integer> winningNumbers;
-    int bonusNumber;
     private int count;
     private Lotto winningLotto;
     final HashMap<Integer, Integer> winningMoney = initWinningMoney();
@@ -36,7 +34,7 @@ class LottoGame {
 
     private void setWinningLotto() {
         winningNumbers = getWinningNumbers();
-        bonusNumber = getBonusNumber();
+        int bonusNumber = getBonusNumber();
         winningLotto = new Lotto(winningNumbers, bonusNumber);
     }
 
@@ -92,15 +90,7 @@ class LottoGame {
     }
 
     private int getBonusNumber() {
-        int bonus = LottoStringUtil.toNumber(getUserInput(BONUS_BALL_MSG));
-        if (!isValidBonusNumber(bonus)) {
-            throw new IllegalArgumentException();
-        }
-        return bonus;
-    }
-
-    private boolean isValidBonusNumber(int bonus) {
-        return winningNumbers.indexOf(bonus) == -1 && LottoValidation.isValidLottoNumber(bonus);
+        return LottoStringUtil.toNumber(getUserInput(BONUS_BALL_MSG));
     }
 
     private void printLotteryResult() {
