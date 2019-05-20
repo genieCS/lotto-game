@@ -14,7 +14,6 @@ class LottoGame {
     private Lotto winningLotto;
     final HashMap<Integer, Integer> winningMoney = initWinningMoney();
     final HashMap<Integer, Integer> winningCount = initWinningCount();
-    int amount = 0;
 
     LottoGame(Scanner scanner) {
         this.scanner = scanner;
