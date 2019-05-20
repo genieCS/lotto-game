@@ -9,7 +9,6 @@ import static util.LottoMap.initWinningMoney;
 class LottoGame {
     private Scanner scanner;
     Set<Lotto> lottos;
-    private List<Integer> winningNumbers;
     private int count;
     private Lotto winningLotto;
     final HashMap<Integer, Integer> winningMoney = initWinningMoney();
@@ -32,7 +31,7 @@ class LottoGame {
     }
 
     private void setWinningLotto() {
-        winningNumbers = getWinningNumbers();
+        List<Integer> winningNumbers = getWinningNumbers();
         int bonusNumber = getBonusNumber();
         winningLotto = new Lotto(winningNumbers, bonusNumber);
     }
