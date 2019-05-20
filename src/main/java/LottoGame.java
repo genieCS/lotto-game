@@ -26,7 +26,8 @@ class LottoGame {
         int bonusNumber = getBonusNumberInput();
         setWinningLotto(winningNumbers, bonusNumber);
         HashMap<Integer, Integer> intersectionCount = computeIntersectionCount();
-        printLotteryResult(intersectionCount);
+        float earningRate = getEarningRate(intersectionCount);
+        printLotteryResult(intersectionCount, earningRate);
     }
 
 
@@ -76,11 +77,10 @@ class LottoGame {
         intersectionCount.put(idx, prev + 1);
     }
 
-    private void printLotteryResult(HashMap<Integer, Integer> intersectionCount) {
+    private void printLotteryResult(HashMap<Integer, Integer> intersectionCount, float earningRate) {
         System.out.println(WINNING_RESULT);
         printIntersectionCounts(intersectionCount);
-        float earningRate = getEarningRate(intersectionCount);
-        System.out.println(String.format(EARNING_RATE_FORMAT, earningRate));
+        printEarningRate(earningRate);
     }
 
     private void printIntersectionCounts(HashMap<Integer, Integer> intersectionCount) {
@@ -108,6 +108,10 @@ class LottoGame {
             sum += winningMoney.getOrDefault(idx, 0) * value;
         }
         return sum;
+    }
+
+    private void printEarningRate(float earningRate) {
+        System.out.println(String.format(EARNING_RATE_FORMAT, earningRate));
     }
 
     private String getUserInput(String message) {
