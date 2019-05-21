@@ -1,3 +1,4 @@
+import util.LottoScanner;
 import util.LottoStringUtil;
 
 import java.util.*;
@@ -7,32 +8,27 @@ import static util.LottoMap.initIntersectionCount;
 import static util.LottoMap.getWinningMoneyMap;
 
 class LottoGame {
-    private Scanner scanner;
+    private LottoScanner scanner;
     Set<Lotto> lottos;
     private Lotto winningLotto;
 
-    LottoGame(Scanner scanner) {
+    LottoGame(LottoScanner scanner) {
         this.scanner = scanner;
         lottos = new HashSet<>();
         startGame();
     }
 
     private void startGame() {
-        String amount = getPurchaseAmountInput();
+        String amount = scanner.getPurchaseAmountInput();
         int count = getLottoCount(amount);
         issueLottos(count);
         printLottoCountAndLottoNumbers();
-        List<Integer> winningNumbers = getWinningNumbersInput();
-        int bonusNumber = getBonusNumberInput();
+        List<Integer> winningNumbers = scanner.getWinningNumbersInput();
+        int bonusNumber = scanner.getBonusNumberInput();
         setWinningLotto(winningNumbers, bonusNumber);
         HashMap<Integer, Integer> intersectionCount = computeIntersectionCount();
         float earningRate = getEarningRate(intersectionCount);
         printLotteryResult(intersectionCount, earningRate);
-    }
-
-
-    private String getPurchaseAmountInput() {
-        return getUserInput(PURCHASE_AMOUNT_MSG);
     }
 
     private int getLottoCount(String input) {
@@ -50,14 +46,6 @@ class LottoGame {
     private void printLottoCountAndLottoNumbers() {
         System.out.println(String.format(PURCHASE_COUNT_FORMAT, lottos.size()));
         Arrays.stream(lottos.toArray()).forEach(System.out::println);
-    }
-
-    private List<Integer> getWinningNumbersInput() {
-        return LottoStringUtil.splitToLotteryNumbers(getUserInput(WINNING_LOTTERY_MSG));
-    }
-
-    private int getBonusNumberInput() {
-        return LottoStringUtil.toNumber(getUserInput(BONUS_BALL_MSG));
     }
 
     private void setWinningLotto(List<Integer> winningNumbers, int bonusNumber) {
@@ -112,10 +100,5 @@ class LottoGame {
 
     private void printEarningRate(float earningRate) {
         System.out.println(String.format(EARNING_RATE_FORMAT, earningRate));
-    }
-
-    private String getUserInput(String message) {
-        System.out.println(message);
-        return scanner.nextLine();
     }
 }

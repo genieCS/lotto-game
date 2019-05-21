@@ -1,8 +1,10 @@
+import util.LottoScanner;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        new LottoGame(scanner);
+        LottoScanner lottoScanner = new LottoScanner(System.in);
+        new LottoGame(lottoScanner);
     }
 }

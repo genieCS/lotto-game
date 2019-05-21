@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Test;
 import util.LottoMap;
+import util.LottoScanner;
 import util.LottoValidation;
 
 import java.util.*;
@@ -23,21 +24,21 @@ class LottoGameTest {
 
     @Test
     void generateLottos() {
-        Scanner scanner = new Scanner("8000\n1,2,3,4,5,6\n7");
-        LottoGame game = new LottoGame(scanner);
+        LottoScanner lottoScanner = new LottoScanner("8000\n1,2,3,4,5,6\n7");
+        LottoGame game = new LottoGame(lottoScanner);
         assertThat(game.lottos.size()).isEqualTo(8);
     }
 
     @Test
     void getBonusNumberWithInvalidInput() {
-        Scanner scanner = new Scanner("8000\n1,2,3,4,5,6\n;");
-        assertThrows(IllegalArgumentException.class, () -> new LottoGame(scanner));
+        LottoScanner lottoScanner = new LottoScanner("8000\n1,2,3,4,5,6\n;");
+        assertThrows(IllegalArgumentException.class, () -> new LottoGame(lottoScanner));
     }
 
     @Test
     void calculateEarningMoneyWithZero() {
-        Scanner scanner = new Scanner("8000\n1,2,3,4,5,6\n7");
-        LottoGame game = new LottoGame(scanner);
+        LottoScanner lottoScanner = new LottoScanner("8000\n1,2,3,4,5,6\n7");
+        LottoGame game = new LottoGame(lottoScanner);
         HashMap<Integer, Integer> winningCount = LottoMap.initIntersectionCount();
         winningCount.put(0, 1);
         assertThat(game.getEarningMoney(winningCount)).isEqualTo(0);
@@ -45,8 +46,8 @@ class LottoGameTest {
 
     @Test
     void calculateEarningMoneyWithOne() {
-        Scanner scanner = new Scanner("8000\n1,2,3,4,5,6\n7");
-        LottoGame game = new LottoGame(scanner);
+        LottoScanner lottoScanner = new LottoScanner("8000\n1,2,3,4,5,6\n7");
+        LottoGame game = new LottoGame(lottoScanner);
         HashMap<Integer, Integer> winningCount = LottoMap.initIntersectionCount();
         winningCount.put(1, 1);
         assertThat(game.getEarningMoney(winningCount)).isEqualTo(0);
@@ -54,8 +55,8 @@ class LottoGameTest {
 
     @Test
     void calculateEarningMoneyWithTwo() {
-        Scanner scanner = new Scanner("8000\n1,2,3,4,5,6\n7");
-        LottoGame game = new LottoGame(scanner);
+        LottoScanner lottoScanner = new LottoScanner("8000\n1,2,3,4,5,6\n7");
+        LottoGame game = new LottoGame(lottoScanner);
         HashMap<Integer, Integer> winningCount = LottoMap.initIntersectionCount();
         winningCount.put(2, 1);
         assertThat(game.getEarningMoney(winningCount)).isEqualTo(0);
@@ -63,8 +64,8 @@ class LottoGameTest {
 
     @Test
     void calculateEarningMoneyWithhree() {
-        Scanner scanner = new Scanner("8000\n1,2,3,4,5,6\n7");
-        LottoGame game = new LottoGame(scanner);
+        LottoScanner lottoScanner = new LottoScanner("8000\n1,2,3,4,5,6\n7");
+        LottoGame game = new LottoGame(lottoScanner);
         HashMap<Integer, Integer> winningCount = LottoMap.initIntersectionCount();
         winningCount.put(3, 1);
         assertThat(game.getEarningMoney(winningCount)).isEqualTo(5000);
@@ -72,8 +73,8 @@ class LottoGameTest {
 
     @Test
     void calculateEarningMoneyWithFour() {
-        Scanner scanner = new Scanner("8000\n1,2,3,4,5,6\n7");
-        LottoGame game = new LottoGame(scanner);
+        LottoScanner lottoScanner = new LottoScanner("8000\n1,2,3,4,5,6\n7");
+        LottoGame game = new LottoGame(lottoScanner);
         HashMap<Integer, Integer> winningCount = LottoMap.initIntersectionCount();
         winningCount.put(4, 1);
         assertThat(game.getEarningMoney(winningCount)).isEqualTo(50000);
@@ -81,8 +82,8 @@ class LottoGameTest {
 
     @Test
     void calculateEarningMoneyWithFive() {
-        Scanner scanner = new Scanner("8000\n1,2,3,4,5,6\n7");
-        LottoGame game = new LottoGame(scanner);
+        LottoScanner lottoScanner = new LottoScanner("8000\n1,2,3,4,5,6\n7");
+        LottoGame game = new LottoGame(lottoScanner);
         HashMap<Integer, Integer> winningCount = LottoMap.initIntersectionCount();
         winningCount.put(5, 1);
         assertThat(game.getEarningMoney(winningCount)).isEqualTo(150000);
@@ -90,8 +91,8 @@ class LottoGameTest {
 
     @Test
     void calculateEarningMoneyWithSix() {
-        Scanner scanner = new Scanner("8000\n1,2,3,4,5,6\n7");
-        LottoGame game = new LottoGame(scanner);
+        LottoScanner lottoScanner = new LottoScanner("8000\n1,2,3,4,5,6\n7");
+        LottoGame game = new LottoGame(lottoScanner);
         HashMap<Integer, Integer> winningCount = LottoMap.initIntersectionCount();
         winningCount.put(6, 1);
         assertThat(game.getEarningMoney(winningCount)).isEqualTo(2000000000);
@@ -99,8 +100,8 @@ class LottoGameTest {
 
     @Test
     void calculateEarningMoneyWithBonus() {
-        Scanner scanner = new Scanner("8000\n1,2,3,4,5,6\n7");
-        LottoGame game = new LottoGame(scanner);
+        LottoScanner lottoScanner = new LottoScanner("8000\n1,2,3,4,5,6\n7");
+        LottoGame game = new LottoGame(lottoScanner);
         HashMap<Integer, Integer> winningCount = LottoMap.initIntersectionCount();
         winningCount.put(FIVE_WITH_BONUS, 1);
         assertThat(game.getEarningMoney(winningCount)).isEqualTo(30000000);
@@ -108,8 +109,8 @@ class LottoGameTest {
 
     @Test
     void calculateEarningMoneyWithMultiple() {
-        Scanner scanner = new Scanner("8000\n1,2,3,4,5,6\n7");
-        LottoGame game = new LottoGame(scanner);
+        LottoScanner lottoScanner = new LottoScanner("8000\n1,2,3,4,5,6\n7");
+        LottoGame game = new LottoGame(lottoScanner);
         HashMap<Integer, Integer> winningCount = LottoMap.initIntersectionCount();
         winningCount.put(FIVE_WITH_BONUS, 1);
         winningCount.put(6, 2);
