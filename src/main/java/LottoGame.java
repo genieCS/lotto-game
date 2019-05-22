@@ -20,11 +20,11 @@ class LottoGame {
 
     private void startGame() {
         issueLottos(getLottoCount(scanner.getPurchaseAmountInput()));
-        printLottoCountAndLottoNumbers();
+        LottoPrinter.printLottoCountAndLottoNumbers(lottos);
         winningLotto = new Lotto(scanner.getWinningNumbersInput(), scanner.getBonusNumberInput());
         HashMap<Integer, Integer> intersectionCount = computeIntersectionCount();
         float earningRate = getEarningRate(intersectionCount);
-        printLotteryResult(intersectionCount, earningRate);
+        LottoPrinter.printLotteryResult(intersectionCount, earningRate);
     }
 
     private int getLottoCount(String input) {
@@ -37,11 +37,6 @@ class LottoGame {
             Lotto lotto = new Lotto();
             lottos.add(lotto);
         }
-    }
-
-    private void printLottoCountAndLottoNumbers() {
-        System.out.println(String.format(PURCHASE_COUNT_FORMAT, lottos.size()));
-        Arrays.stream(lottos.toArray()).forEach(System.out::println);
     }
 
     private HashMap<Integer, Integer> computeIntersectionCount() {
@@ -73,24 +68,5 @@ class LottoGame {
             sum += winningMoney.getOrDefault(idx, 0) * value;
         }
         return sum;
-    }
-
-    private void printLotteryResult(HashMap<Integer, Integer> intersectionCount, float earningRate) {
-        System.out.println(WINNING_RESULT);
-        printIntersectionCounts(intersectionCount);
-        printEarningRate(earningRate);
-    }
-
-    private void printIntersectionCounts(HashMap<Integer, Integer> intersectionCount) {
-        HashMap<Integer, Integer> winningMoney = getWinningMoneyMap();
-        for (int i=3; i < LOTTO_SIZE; i++) {
-            System.out.println(String.format(INTERSECTION_COUNT_FORMAT, i, winningMoney.get(i), intersectionCount.get(i)));
-        }
-        System.out.println(String.format(BONUS_COUNT_FORMAT, winningMoney.get(FIVE_WITH_BONUS), intersectionCount.get(FIVE_WITH_BONUS)));
-        System.out.println(String.format(INTERSECTION_COUNT_FORMAT, 6, winningMoney.get(6), intersectionCount.get(6)));
-    }
-
-    private void printEarningRate(float earningRate) {
-        System.out.println(String.format(EARNING_RATE_FORMAT, earningRate));
     }
 }
