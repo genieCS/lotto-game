@@ -1,11 +1,10 @@
 import util.LottoScanner;
-import util.LottoStringUtil;
 
 import java.util.*;
 
-import static util.Constant.*;
-import static util.LottoMap.initIntersectionCount;
+import static util.Constant.PURCHASE_UNIT;
 import static util.LottoMap.getWinningMoneyMap;
+import static util.LottoMap.initIntersectionCount;
 
 class LottoGame {
     private LottoScanner scanner;
@@ -27,8 +26,7 @@ class LottoGame {
         LottoPrinter.printLotteryResult(intersectionCount, earningRate);
     }
 
-    private int getLottoCount(String input) {
-        int amount = LottoStringUtil.toNumber(input);
+    private int getLottoCount(int amount) {
         return amount / PURCHASE_UNIT;
     }
 

@@ -17,8 +17,12 @@ public class LottoScanner {
         this.scanner = new Scanner(source);
     }
 
-    public String getPurchaseAmountInput() {
-        return getUserInput(PURCHASE_AMOUNT_MSG);
+    public int getPurchaseAmountInput() {
+        int amount = LottoStringUtil.toNumber(getUserInput(PURCHASE_AMOUNT_MSG));
+        if (amount < PURCHASE_UNIT) {
+            throw new IllegalArgumentException();
+        }
+        return amount;
     }
 
     public List<Integer> getWinningNumbersInput() {
