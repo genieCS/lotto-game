@@ -19,13 +19,9 @@ class LottoGame {
     }
 
     private void startGame() {
-        String amount = scanner.getPurchaseAmountInput();
-        int count = getLottoCount(amount);
-        issueLottos(count);
+        issueLottos(getLottoCount(scanner.getPurchaseAmountInput()));
         printLottoCountAndLottoNumbers();
-        List<Integer> winningNumbers = scanner.getWinningNumbersInput();
-        int bonusNumber = scanner.getBonusNumberInput();
-        setWinningLotto(winningNumbers, bonusNumber);
+        winningLotto = new Lotto(scanner.getWinningNumbersInput(), scanner.getBonusNumberInput());
         HashMap<Integer, Integer> intersectionCount = computeIntersectionCount();
         float earningRate = getEarningRate(intersectionCount);
         printLotteryResult(intersectionCount, earningRate);
@@ -46,10 +42,6 @@ class LottoGame {
     private void printLottoCountAndLottoNumbers() {
         System.out.println(String.format(PURCHASE_COUNT_FORMAT, lottos.size()));
         Arrays.stream(lottos.toArray()).forEach(System.out::println);
-    }
-
-    private void setWinningLotto(List<Integer> winningNumbers, int bonusNumber) {
-        winningLotto = new Lotto(winningNumbers, bonusNumber);
     }
 
     private HashMap<Integer, Integer> computeIntersectionCount() {
