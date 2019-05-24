@@ -9,7 +9,7 @@ import static util.LottoMap.initIntersectionCount;
 class LottoGame {
     private LottoScanner scanner;
     Set<Lotto> lottos;
-    private Lotto winningLotto;
+    private WinningLotto winningLotto;
 
     LottoGame(LottoScanner scanner) {
         this.scanner = scanner;
@@ -20,7 +20,7 @@ class LottoGame {
     private void startGame() {
         issueLottos(getLottoCount(scanner.getPurchaseAmountInput()));
         LottoPrinter.printLottoCountAndLottoNumbers(lottos);
-        winningLotto = new Lotto(scanner.getWinningNumbersInput(), scanner.getBonusNumberInput());
+        winningLotto = new WinningLotto(scanner.getWinningNumbersInput(), scanner.getBonusNumberInput());
         HashMap<Integer, Integer> intersectionCount = computeIntersectionCount();
         float earningRate = getEarningRate(intersectionCount);
         LottoPrinter.printLotteryResult(intersectionCount, earningRate);
